@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<launch>
+    <!-- 定义命名空间 -->
+    <arg name="namespace" default="panda" />
+    <arg name="arm_id" default="panda" />
+    <arg name="pipeline"    default="ompl"/>
+    <arg name="load_gripper"    default="true"/>
+    <arg name="gazebo_gui"   default="true"/>
+    <!-- <arg name="rviz_tutorial"   default="false"/> -->
+    <arg name="use_rviz"    default="true" />
+    <arg name="x"           default="0"/>
+    <arg name="y"           default="0"/>
+    <arg name="z"           default="0.6"/>
+    <arg name="roll"        default="0"/>
+    <arg name="pitch"       default="0"/>
+    <arg name="yaw"         default="1.57079632679"/>
+    <arg name="world"       default="$(find grasp_sim)/worlds/defalut.world"/>
+    <arg name="use_sim_time" default="true"/>
+
+    <group>
+        <include file="$(find panda_moveit_config)/launch/demo_gazebo.launch" pass_all_args="true">
+            <arg name="arm_id"          value="$(arg arm_id)"/>
+            <arg name="pipeline"        value="$(arg pipeline)"/>
+            <arg name="load_gripper"    value="$(arg load_gripper)"/>
+            <arg name="gazebo_gui"      value="$(arg gazebo_gui)"/>
+            <arg name="use_rviz"        value="$(arg use_rviz)"/>
+            <!-- <arg name="x"              value="$(arg x)"/>
+            <arg name="y"              value="$(arg y)"/>
+            <arg name="z"              value="$(arg z)"/>
+            <arg name="roll"           value="$(arg roll)"/>
+            <arg name="pitch"          value="$(arg pitch)"/>
+            <arg name="yaw"            value="$(arg yaw)"/>
+            <arg name="world"          value="$(arg world)"/> -->
+        </include>
+    </group>
+
+    <group ns="realsense">
+        <!-- <arg name="use_sim_time" default="true"/> -->
+        <arg name="model"       default="$(find grasp_sim)/urdf/test_d435_camera.urdf.xacro"/>
+        <param name="d435_description" command="$(find xacro)/xacro $(arg model)" />
+        <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+            args="-y 0.7 -z 2 -P 1.570796 -Y 1.570796 -unpause -urdf -model realsense -param d435_description" respawn="false" output="screen" />
+        <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher">
+            <param name="publish_frequency" type="double" value="30.0" />
+        </node>
+    </group>
+
+</launch>
+

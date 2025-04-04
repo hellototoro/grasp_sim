@@ -1,0 +1,24 @@
+serial_no: ''
+json_file_path: ''
+camera: 'camera'
+camera_parent_link: 'world'
+description_enabled: true
+rviz_enabled: true
+
+depth_width: 1280
+depth_height: 720
+depth_fps: 30
+enable_depth: true
+
+color_width: 1280
+color_height: 720
+color_fps: 30
+enable_color: true
+
+infra_width: 1280
+infra_height: 720
+infra_fps: 30
+enable_infra1: true
+enable_infra2: true
+
+align_depth: true
