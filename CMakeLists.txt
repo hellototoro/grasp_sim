@@ -168,7 +168,7 @@ include_directories(
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
 #   scripts/realsense.py
-#   scripts/creat_workspace_mask.py
+  scripts/graspnet_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

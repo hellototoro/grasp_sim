@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<robot name="realsense d435 gazebo xacro file" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="camera_name" default="camera"/>
+  <xacro:arg name="camera_frame" default="camera_base_link"/>
+  <xacro:arg name="use_nominal_extrinsics" default="false"/>
+  <xacro:arg name="add_plug" default="false" />
+  <xacro:arg name="use_mesh" default="true" />
+  <xacro:arg name="topics_ns" default="camera" />
+  <xacro:arg name="publish_pointcloud" default="true" />
+  <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+  <xacro:include filename="$(find realsense_simulation)/urdf/_d435.gazebo.xacro" />
+
+  <link name="$(arg camera_frame)"/>
+
+  <xacro:sensor_d435 name="$(arg camera_name)" 
+    parent="$(arg camera_frame)"
+    use_nominal_extrinsics="$(arg use_nominal_extrinsics)"
+    add_plug="$(arg add_plug)"
+    use_mesh="$(arg use_mesh)">
+
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:sensor_d435>
+
+  <xacro:gazebo_d435 camera_name="$(arg camera_name)"
+    reference_link="$(arg camera_name)_link"
+    topics_ns="$(arg topics_ns)"
+    depth_optical_frame="$(arg camera_name)_depth_optical_frame"
+    color_optical_frame="$(arg camera_name)_color_optical_frame"
+    infrared1_optical_frame="$(arg camera_name)_infra1_optical_frame"
+    infrared2_optical_frame="$(arg camera_name)_infra2_optical_frame"
+    publish_pointcloud="$(arg publish_pointcloud)">
+  </xacro:gazebo_d435>
+
+  <gazebo>
+    <static>true</static>
+  </gazebo>
+
+</robot>

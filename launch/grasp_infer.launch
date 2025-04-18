@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="grasp_sim" type="graspnet_node.py" name="graspnet_processor" output="screen">
+    <env name="PYTHONPATH" value="/home/totoro/miniconda3/envs/graspness/bin/python"/>
+  </node>
+</launch>
